@@ -85,7 +85,7 @@ void init_setup(setagem *params) {
     params->SPo_T = 1;
 
     /* Tcp Server */
-    init_server(10003);
+    init_server(10103);
 
     /* GPIO setup */
 	//init_GPIO();
