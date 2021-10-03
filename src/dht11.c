@@ -8,7 +8,7 @@
 #include "dht11.h"
 
 // FUNCTION DEFINITIONS
-int read_dht_data(state *params) {
+int read_dht_data(setagem *params) {
     
     uint8_t dht_pin = PIN_DHT11_1;  // default GPIO 20 (wiringPi 28)
 
