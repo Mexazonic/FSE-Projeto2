@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "constants.h"
 #define DELAY_5 5000000
 
 void init_GPIO();
