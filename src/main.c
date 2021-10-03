@@ -9,7 +9,7 @@ void close_connections();
 
 
 
-void read_sensors(state *set) {
+void read_sensors(setagem *set) {
 	read_dht_data(set);
 
 	printf( "main() Humildade = %.2f%% Temperatura = %.2f ºF\n", set->umidade, set->temperatura);
@@ -50,7 +50,7 @@ void read_sensors(state *set) {
 
 int main() {
     
-    setagem *params = (state *) malloc(sizeof(setagem));
+    setagem *params = (setagem *) malloc(sizeof(setagem));
 
     /* Initial Setup */
 	init_setup(params);
