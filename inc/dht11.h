@@ -15,6 +15,6 @@
 // FUNCTION DECLARATIONS
 int init();
 void printUsage();
-int read_dht_data(state *params);
+int read_dht_data(setagem *params);
 
 #endif /* DHT11_H_ */
