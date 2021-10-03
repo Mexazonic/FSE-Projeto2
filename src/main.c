@@ -12,7 +12,7 @@ void close_connections();
 void read_sensors(setagem *set) {
 	read_dht_data(set);
 
-	printf( "main() Humildade = %.2f%% Temperatura = %.2f ºF\n", set->umidade, set->temperatura);
+	printf( "Humildade = %.2f%% Temperatura = %.2f ºF\n", set->umidade, set->temperatura);
 	
 	set->SP_T = read_gpio(SP_T); // Sensor de Presença
 	printf("Sensor de presenca Terreo: %d\n", set->SP_T);
