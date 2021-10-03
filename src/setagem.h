@@ -38,6 +38,6 @@ typedef struct {
     // int SJ_1;
     // int SJ_2;
     
-} state;
+} setagem;
 
 #endif /* STATE_H_ */
