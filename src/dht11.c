@@ -74,7 +74,7 @@ int read_dht_data(setagem *params) {
 		}
         
         /* Update State */
-        params->tempeartura = c;
+        params->temperatura = c;
 		params->umidade = h;
         
         temp_cels = c;
