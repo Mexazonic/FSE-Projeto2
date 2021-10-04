@@ -7,7 +7,7 @@
 
 void init_setup();
 void close_connections();
-
+void sensores();
 
 int main() {
     
@@ -15,7 +15,7 @@ int main() {
 
     /* Initial Setup */
 	init_setup(params);
-    read_sensors(params);
+    sensores(params);
     
 	close_connections();
 
@@ -65,7 +65,7 @@ void close_connections() {
 
 
 
-void read_sensors(setagem *set) {
+void sensores(setagem *set) {
 	read_dht_data(set);
 
 	printf( "Humildade = %.2f%% Temperatura = %.2f ºF\n", set->umidade, set->temperatura);
