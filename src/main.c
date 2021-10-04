@@ -3,6 +3,7 @@
 #include "../inc/setagem.h"
 #include "../inc/gpio.h"
 #include "../inc/dht11.h"
+#include "../inc/default.h"
 
 
 void init_setup();
