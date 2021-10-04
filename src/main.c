@@ -9,45 +9,6 @@ void init_setup();
 void close_connections();
 
 
-void read_sensors(setagem *set) {
-	read_dht_data(set);
-
-	printf( "Humildade = %.2f%% Temperatura = %.2f ºF\n", set->umidade, set->temperatura);
-	
-	set->SP_T = read_gpio(SP_T); // Sensor de Presença
-	printf("Sensor de presenca Terreo: %d\n", set->SP_T);
-	set->SPo_T = read_gpio(SPo_T); // Portaria
-	printf("Sensor da porta Terreo: %d\n", set->SPo_T);
-
-	set->SJ_T01 = read_gpio(SJ_T01); // Janela 1 
-	printf("Sensor SJ_T01 - Térreo: %d\n", set->SJ_T01);
-
-	set->SJ_T02 = read_gpio(SJ_T02); // Janela 2
-	printf("Sensor SJ_T02 - Térreo: %d\n", set->SJ_T02);
-
-	set->SF_T = read_gpio(SF_T); // Fumacê	
-	printf("Sensor Fumaça: %d\n", set->SF_T);
-
-	int n = 3;
-	while(n--) {
-
-		
-		set->SC_IN = read_gpio(SC_IN);
-		printf("Entrada: %d\n", set->SC_IN);
-
-		set->SC_OUT = read_gpio(SC_OUT);		
-		printf("Sainda: %d\n", set->SC_OUT);
-
-		// Fluxo de Pessoas
-		set->people_amount = set->people_amount + set->SC_IN - set->SC_OUT;
-		printf("Pessoas no local: %d\n", set->people_amount);
-
-		usleep(200000);
-	}
-
-}
-
-
 int main() {
     
     setagem *params = (setagem *) malloc(sizeof(setagem));
@@ -102,4 +63,43 @@ void close_connections() {
 }
 
 
+
+
+void read_sensors(setagem *set) {
+	read_dht_data(set);
+
+	printf( "Humildade = %.2f%% Temperatura = %.2f ºF\n", set->umidade, set->temperatura);
+	
+	set->SP_T = read_gpio(SP_T); // Sensor de Presença
+	printf("Sensor de presenca Terreo: %d\n", set->SP_T);
+	set->SPo_T = read_gpio(SPo_T); // Portaria
+	printf("Sensor da porta Terreo: %d\n", set->SPo_T);
+
+	set->SJ_T01 = read_gpio(SJ_T01); // Janela 1 
+	printf("Sensor SJ_T01 - Térreo: %d\n", set->SJ_T01);
+
+	set->SJ_T02 = read_gpio(SJ_T02); // Janela 2
+	printf("Sensor SJ_T02 - Térreo: %d\n", set->SJ_T02);
+
+	set->SF_T = read_gpio(SF_T); // Fumacê	
+	printf("Sensor Fumaça: %d\n", set->SF_T);
+
+	int n = 3;
+	while(n--) {
+
+		
+		set->SC_IN = read_gpio(SC_IN);
+		printf("Entrada: %d\n", set->SC_IN);
+
+		set->SC_OUT = read_gpio(SC_OUT);		
+		printf("Sainda: %d\n", set->SC_OUT);
+
+		// Fluxo de Pessoas
+		set->people_amount = set->people_amount + set->SC_IN - set->SC_OUT;
+		printf("Pessoas no local: %d\n", set->people_amount);
+
+		usleep(200000);
+	}
+
+}
 
