@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "../inc/setagem.h"
-#include "gpio.h"
+#include "../inc/gpio.h"
+#include "../inc/dht11.h"
 
 
 void init_setup();
