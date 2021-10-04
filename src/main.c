@@ -67,18 +67,18 @@ void sensores(setagem *set) {
 	printf( "Humildade = %.2f%% Temperatura = %.2f ºF\n", set->umidade, set->temperatura);
 	
 	set->SP_T_estado = read_gpio(SP_T); // Sensor de Presença
-	printf("Sensor de presenca Terreo: %d\n", set->SP_T);
+	printf("Sensor de presenca Terreo: %d\n", set->SP_T_estado);
 	set->SPo_T_estado = read_gpio(SPo_T); // Portaria
-	printf("Sensor da porta Terreo: %d\n", set->SPo_T);
+	printf("Sensor da porta Terreo: %d\n", set->SPo_T_estado);
 
 	set->SJ_T01_estado = read_gpio(SJ_T01); // Janela 1 
-	printf("Sensor SJ_T01 - Térreo: %d\n", set->SJ_T01);
+	printf("Sensor SJ_T01 - Térreo: %d\n", set->SJ_T01_estado);
 
 	set->SJ_T02_estado = read_gpio(SJ_T02); // Janela 2
-	printf("Sensor SJ_T02 - Térreo: %d\n", set->SJ_T02);
+	printf("Sensor SJ_T02 - Térreo: %d\n", set->SJ_T02_estado);
 
 	set->SF_T_estado = read_gpio(SF_T); // Fumacê	
-	printf("Sensor Fumaça: %d\n", set->SF_T);
+	printf("Sensor Fumaça: %d\n", set->SF_T_estado);
 
 	int n = 3;
 	while(n--) {
