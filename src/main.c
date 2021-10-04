@@ -12,6 +12,7 @@ void sensores();
 
 int main() {
     
+    init_GPIO();
     setagem *params = (setagem *) malloc(sizeof(setagem));
 
     /* Initial Setup */
