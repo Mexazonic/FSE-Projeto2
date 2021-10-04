@@ -45,12 +45,7 @@ void init_setup(setagem *params) {
     params->SJ_T02 = 1;
     params->SPo_T = 1;
 
-    /* Tcp Server */
-    init_server(10103);
-
-    /* GPIO setup */
-	//init_GPIO();
-
+  
 	usleep(1000000);
 }
 
@@ -95,8 +90,8 @@ void sensores(setagem *set) {
 		printf("Sainda: %d\n", set->SC_OUT);
 
 		// Fluxo de Pessoas
-		set->people_amount = set->people_amount + set->SC_IN - set->SC_OUT;
-		printf("Pessoas no local: %d\n", set->people_amount);
+		set->pessoas = set->pessoas + set->SC_IN - set->SC_OUT;
+		printf("Pessoas no local: %d\n", set->pessoas);
 
 		usleep(200000);
 	}
