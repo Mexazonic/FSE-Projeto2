@@ -10,7 +10,7 @@
 // FUNCTION DEFINITIONS
 int read_dht_data(setagem *params) {
     
-    uint8_t dht_pin = PIN_DHT11_1;  // default GPIO 20 (wiringPi 28)
+    uint8_t dht_pin = 28;  // default GPIO 20 (wiringPi 28)
 
     int data[5] = { 0, 0, 0, 0, 0 };
     float temp_cels = -1;
@@ -74,8 +74,8 @@ int read_dht_data(setagem *params) {
 		}
         
         /* Update State */
-        params->temperature = c;
-		params->humidity = h;
+        params->tempeartura = c;
+		params->umidade = h;
         
         temp_cels = c;
 		temp_fahr = c * 1.8f + 32;

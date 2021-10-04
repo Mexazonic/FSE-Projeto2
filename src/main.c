@@ -18,8 +18,7 @@ int main() {
 	init_setup(params);
     sensores(params);
     
-	close_connections();
-
+    unbind_gpio();
 
     return 0;
 }
@@ -50,13 +49,6 @@ void init_setup(setagem *params) {
 	usleep(1000000);
 }
 
-void close_connections() {
-    /* Close GPIO */
-    //unbind_gpio();
-
-    close_server();
-    close_client();
-}
 
 
 
