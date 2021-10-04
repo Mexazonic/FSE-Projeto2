@@ -13,21 +13,21 @@ typedef struct {
 
     // Pessoas
     int pessoas;
-    int SC_IN ;
-    int SC_OUT;
+    int SC_IN_estado;
+    int SC_OUT_estado;
 
 // Andare
-    int LS_T01;
-    int LS_T02;
-    int LC_T ;
-    int AC_T ;
-    int ASP ;
+    int LS_T01_estado;
+    int LS_T02_estado;
+    int LC_T_estado;
+    int AC_T_estado;
+    int ASP_estado;
 
-    int SP_T;
-    int SF_T;
-    int SJ_T01;
-    int SJ_T02;
-    int SPo_T;
+    int SP_T_estado;
+    int SF_T_estado;
+    int SJ_T01_estado;
+    int SJ_T02_estado;
+    int SPo_T_estado;
 
    
 } setagem;

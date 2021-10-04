@@ -32,19 +32,19 @@ void init_setup(setagem *params) {
     params->temperatura = -100.0;
     params->umidade = -100.0;
     params->pessoas = 0;
-    params->SC_IN = 0;
-    params->SC_OUT = 0;
+    params->SC_IN_estado = 0;
+    params->SC_OUT_estado = 0;
 
-    params->LS_T01 = 0;
-    params->LS_T02 = 1;
-    params->LC_T = 1;
-    params->AC_T = 0;
-    params->ASP = 1;
-    params->SP_T = 1;
-    params->SF_T = 1;
-    params->SJ_T01 = 1;
-    params->SJ_T02 = 1;
-    params->SPo_T = 1;
+    params->LS_T01_estado = 0;
+    params->LS_T02_estado = 1;
+    params->LC_T_estado = 1;
+    params->AC_T_estado = 0;
+    params->ASP_estado = 1;
+    params->SP_T_estado = 1;
+    params->SF_T_estado = 1;
+    params->SJ_T01_estado = 1;
+    params->SJ_T02_estado = 1;
+    params->SPo_T_estado = 1;
 
   
 	usleep(1000000);
