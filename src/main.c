@@ -4,27 +4,30 @@
 #include "../inc/gpio.h"
 #include "../inc/dht11.h"
 #include "../inc/default.h"
+#include "../inc/servidor_tcp.h"
 
 
-void init_setup();
+void config();
 void close_connections();
 void sensores();
 
 int main() {
     
-    init_GPIO();
+    //init_GPIO();
     setagem *params = (setagem *) malloc(sizeof(setagem));
 
     /* Initial Setup */
-	init_setup(params);
-    sensores(params);
-    
-    unbind_gpio();
+	config(params);
+    //sensores(params);
+    start_socket(10103)
+
+
+    //unbind_gpio();
 
     return 0;
 }
 
-void init_setup(setagem *params) {
+void config(setagem *params) {
 
     params->run = 0;
     
