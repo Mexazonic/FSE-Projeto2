@@ -19,7 +19,7 @@ int main() {
     /* Initial Setup */
 	config(params);
     //sensores(params);
-    start_socket(10103)
+    start_socket(10103);
 
 
     //unbind_gpio();
