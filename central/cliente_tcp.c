@@ -21,7 +21,7 @@ int enviar_parametros(const void *params) {
 		printf("Erro no connect.\n");
 	}
 
-	size = sizeof(state);
+	size = sizeof(setagem);
 
 	bytes_sent = send(client_socket, params, size, 0);
 
