@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include "servidor_tcp.h"
+#include "../inc/servidor_tcp.h"
 #include "setagem.h"
-#include "gpio.h"
-#include "default.h"
+#include "../inc/gpio.h"
+#include "../inc/default.h"
 
 void start_socket(unsigned short port) {
 

@@ -26,6 +26,8 @@ int main() {
     enviar_parametros((void *) params);
     //unbind_gpio();
 
+
+
     return 0;
 }
 

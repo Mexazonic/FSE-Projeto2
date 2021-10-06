@@ -1,6 +1,6 @@
-#include "cliente_tcp.h"
-#include "setagem.h"
-#include "default.h"
+#include "../inc/cliente_tcp.h"
+#include "../inc/setagem.h"
+#include "../inc/default.h"
 
 
 int enviar_parametros(const void *params) {
