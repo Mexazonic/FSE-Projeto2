@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include "cliente_tcp.h"
 #include "setagem.h"
+#include "config.h"
 
 #define MAX_TIMINGS	85
 #define DEBUG 0

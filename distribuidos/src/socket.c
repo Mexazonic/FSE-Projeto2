@@ -1,4 +1,5 @@
 #include "socket.h"
+#include "gpio.h"
 
 void fechar_servidor_distribuido() {
     close(server_socket);
@@ -19,7 +20,7 @@ void *iniciar_servidor_distribuido() {
 	}
 
 	int bytes_received;
-	setagem buffer;
+	char buffer[5000];
 	void *buffer_tmp = &buffer[0];
 
 	while(1){    

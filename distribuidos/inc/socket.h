@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include "setagem.h"
 #include "cliente_tcp.h"
-#include "gpio.h"
+#include "config.h"
 
 int server_socket, client_socket;
 struct sockaddr_in serv_addr;

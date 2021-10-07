@@ -7,8 +7,8 @@
 #include <pthread.h>
 #include "socket.h"
 #include "cliente_tcp.h"
-#include "setagem.h"
 #include "gpio.h"
+#include "config.h"
 
 // Andar Terreo
 #define LS_T01 7
@@ -41,28 +41,6 @@
 #define PESSOAS_IDENTIFICADOR 1
 #define ALARME_PRESENCE 2
 #define ALARME_FIRE 3
-
-typedef struct {
-    float temperatura;
-    float humidade;
-    int pessoas;
-    int SC_IN_setagem;
-    int SC_OUT_setagem;
-    int presence_alarm;
-    int fire_alarm;
-    int LS_T01_setagem;
-    int LS_T02_setagem;
-    int LC_T_setagem;
-    int AC_T_setagem;
-    int ASP_setagem;
-    int SP_T_setagem;
-    int SF_T_setagem;
-    int SJ_T01_setagem;
-    int SJ_T02_setagem;
-    int SPo_T_setagem;
-    int identificador;
-
-} setagem;
 
 pthread_t thread_servidor, thread_leitura_sensores;
 setagem *estado;
