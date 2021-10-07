@@ -1,6 +1,4 @@
 #include "menu.h"
-#include "setagem.h"
-
 
 void *carregar_menu(void *args) {
 
@@ -21,21 +19,19 @@ void menu(setagem *params) {
     printf("5-Alarme de incêndio\n");
     printf("\nOpção: ");
     
-    int option, run = 0;
-    int turn_on_off;
-    scanf("%d", &option);
-    
-    switch(option) {
-        case 1:
-             
-            run = 0;
+    int escolha, run;
+    int ligar_desligar_flag;
 
+    scanf("%d", &escolha);
+    
+    switch(escolha) {
+        case 1:
+            run = 0;
             while(1) {
 
                 if(run != 0) {
                     break;
                 }
-
                 printf("\n********** Estado dos sensores e Atuadores ********\n\n");
                 
                 printf("Lâmpada da Sala T01: %d\n", params->LS_T01_setagem);
@@ -65,76 +61,76 @@ void menu(setagem *params) {
             break;
         case 2:
             
-                printf("\n********** Lampadas ********\n\n");
-                printf("1-Lâmpada da Sala T01\n");
-                printf("2-Lâmpada da Sala T02\n");
-                printf("3-Lâmpadas do Corredor Terreo\n");
-                printf("4-Sair\n");
-                printf("\nOpção: ");
+            printf("\n********** Lampadas ********\n\n");
+            printf("1-Lâmpada da Sala T01\n");
+            printf("2-Lâmpada da Sala T02\n");
+            printf("3-Lâmpadas do Corredor Terreo\n");
+            printf("4-Sair\n");
+            printf("\nOpção: ");
+            
+        
+            scanf("%d", &escolha);
+
+            switch (escolha) {
+                case 1:
+                    
+                    ligar_desligar();
+                    scanf("%d", &ligar_desligar_flag);
+                    params->LS_T01_setagem = ligar_desligar_flag;
+                    params->codigo_atuador = LS_T01;
+                    
+                    enviar_dados_tcp((void *) params);
+
+                    atualizar_log("Lâmpada da Sala T01", ligar_desligar_flag);
+
+                    menu(params);
+                    
+                    break;
+
+                case 2:
                 
-               
+                    ligar_desligar();
+                
+                    scanf("%d", &ligar_desligar_flag);
+                
+                    params->LS_T02_setagem = ligar_desligar_flag;
+                    params->codigo_atuador = LS_T02;
+                
+                    enviar_dados_tcp((void *) params);
 
-                scanf("%d", &option);
+                    atualizar_log("Lâmpada da Sala T02", ligar_desligar_flag);
 
-                switch (option) {
-                    case 1:
-                        
-                        ligar_desligar();
-                        scanf("%d", &turn_on_off);
-                        params->LS_T01_setagem = turn_on_off;
-                        params->identificador = LS_T01;
-                        
-                        enviar_dado_tcp((void *) params);
+                    menu(params);
 
-                        atualizar_log("Lâmpada da Sala T01", turn_on_off);
+                    break;
+                case 3:  
 
-                        menu(params);
-                        
-                        break;
+                    ligar_desligar();
+                
+                    scanf("%d", &ligar_desligar_flag);
 
-                    case 2:
-                    
-                        ligar_desligar();
-                    
-                        scanf("%d", &turn_on_off);
-                    
-                        params->LS_T02_setagem = turn_on_off;
-                        params->identificador = LS_T02;
-                    
-                        enviar_dado_tcp((void *) params);
+                    params->LC_T_setagem = ligar_desligar_flag;
+                    params->codigo_atuador = LC_T;
+                
+                    enviar_dados_tcp((void *) params);
 
-                        atualizar_log("Lâmpada da Sala T02", turn_on_off);
+                    atualizar_log("Lâmpadas do Corredor Terreo", ligar_desligar_flag);
 
-                        menu(params);
+                    menu(params);
 
-                        break;
-                    case 3:  
+                    break;
+                
+                case 4:
+                    menu(params);
+                    break;
+                
+                default:
+                    printf("\nInvalido.\n\n");
+                    menu(params);
+            }
 
-                        ligar_desligar();
-                    
-                        scanf("%d", &turn_on_off);
+        break;
 
-                        params->LC_T_setagem = turn_on_off;
-                        params->identificador = LC_T;
-                    
-                        enviar_dado_tcp((void *) params);
-
-                        atualizar_log("Lâmpadas do Corredor Terreo", turn_on_off);
-
-                        menu(params);
-
-                        break;
-                    
-                    case 4:
-                        menu(params);
-                        break;
-                    
-                    default:
-                        printf("\nInvalido.\n\n");
-                        menu(params);
-                }
-
-            break;
         case 3:
             
             printf("\n********** Ar condicionado ********\n\n");
@@ -144,20 +140,20 @@ void menu(setagem *params) {
             printf("\nOpção: ");
             
 
-            scanf("%d", &option);
+            scanf("%d", &escolha);
 
-            switch (option) {
+            switch (escolha) {
                 case 1:
                     
                     ligar_desligar();
-                    scanf("%d", &turn_on_off);
+                    scanf("%d", &ligar_desligar_flag);
 
-                    params->AC_T_setagem = turn_on_off;
-                    params->identificador = AC_T;
+                    params->AC_T_setagem = ligar_desligar_flag;
+                    params->codigo_atuador = AC_T;
                     
-                    enviar_dado_tcp((void *) params);
+                    enviar_dados_tcp((void *) params);
 
-                    atualizar_log("Ar condicionado terreo", turn_on_off);
+                    atualizar_log("Ar condicionado terreo", ligar_desligar_flag);
 
                     menu(params);
                     
@@ -173,20 +169,21 @@ void menu(setagem *params) {
             }
 
             break;
+
         case 4:
             
             printf("\n********** Alarme de Presença ********\n\n");
             ligar_desligar();
 
 
-            scanf("%d", &turn_on_off);
+            scanf("%d", &ligar_desligar_flag);
             
-            params->presence_alarm = turn_on_off;
-            params->identificador = ALARME_PRESENCE;
+            params->presence_alarm = ligar_desligar_flag;
+            params->codigo_atuador = ALARME_PRESENCA;
             
-            enviar_dado_tcp((void *) params);
+            enviar_dados_tcp((void *) params);
 
-            atualizar_log("ALARME_PRESENÇA", turn_on_off);
+            atualizar_log("ALARME_PRESENÇA", ligar_desligar_flag);
 
             menu(params);
 
@@ -197,14 +194,14 @@ void menu(setagem *params) {
             ligar_desligar();
 
 
-            scanf("%d", &turn_on_off);
+            scanf("%d", &ligar_desligar_flag);
             
-            params->fire_alarm = turn_on_off;
-            params->identificador = ALARME_FIRE;
+            params->fire_alarm = ligar_desligar_flag;
+            params->codigo_atuador = ALARME_FOGO;
             
-            enviar_dado_tcp((void *) params);
+            enviar_dados_tcp((void *) params);
 
-            atualizar_log("ALARME_INCENDIO", turn_on_off);
+            atualizar_log("ALARME_INCENDIO", ligar_desligar_flag);
 
             menu(params);
 
@@ -216,6 +213,7 @@ void menu(setagem *params) {
     }
 }
 
+
 void ligar_desligar() {
 
     printf("\n********** Ligar/Desligar ********\n\n");
@@ -223,4 +221,3 @@ void ligar_desligar() {
     printf("1) Ligar\n");
     printf("Opcao: ");
 }
-

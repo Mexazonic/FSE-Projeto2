@@ -1,20 +1,12 @@
 #include "setagem.h"
-#include "config.h"
 
 int main() {
-
     signal(SIGINT, fechar);
-    char aux[5000];
-    void * temp = &aux[0];
-
-    estado = (setagem *) temp;
-    iniciar(estado);
-
-    pthread_create(&thread_servidor, NULL, iniciar_servidor_distribuido, (void *) &estado);
-    pthread_create(&thread_menu, NULL, carregar_menu, (void *) &estado);
-    pthread_join(thread_servidor, NULL);
-    pthread_join(thread_menu, NULL);
-
+    params = (setagem *) malloc(sizeof(setagem));
+    iniciar(params);
+    pthread_create(&th_servidor, NULL, iniciar_servidor, (void *) &params);
+    pthread_create(&menu_thread, NULL, carregar_menu, (void *) &params);
+    pthread_join(th_servidor, NULL);
+    pthread_join(menu_thread, NULL);
     return 0;
 }
-

@@ -7,14 +7,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "setagem.h"
-#include "cliente_tcp.h"
+#include "constants.h"
 #include "config.h"
+#include "cliente_tcp.h"
+#include "constants.h"
 
 int server_socket, client_socket;
 struct sockaddr_in serv_addr;
 
-void *iniciar_servidor_distribuido();
-void fechar_servidor_distribuido();
+void *iniciar_servidor(void *args);
+void close_server();
 
 #endif

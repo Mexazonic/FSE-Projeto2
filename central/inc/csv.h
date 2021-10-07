@@ -10,7 +10,7 @@ time_t seed;
 struct tm *args;
 char datetime[80];
 
+void init_csv();
 void atualizar_log(char * command, int value);
-void criar_arquivo();
 
 #endif

@@ -1,5 +1,9 @@
-#ifndef _CONFIG_H
-#define _CONFIG_H
+#ifndef CONFIG_H_
+#define CONFIG_H_
+
+#include <stdlib.h>
+#include "constants.h"
+#include "cliente_tcp.h"
 
 typedef struct {
     float temperatura;
@@ -19,8 +23,8 @@ typedef struct {
     int SJ_T01_setagem;
     int SJ_T02_setagem;
     int SPo_T_setagem;
-    int identificador;
-
+    int codigo_sensor;
+    int codigo_atuador;
 } setagem;
 
 #endif

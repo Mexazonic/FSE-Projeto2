@@ -4,10 +4,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "setagem.h"
 #include "cliente_tcp.h"
-#include "csv.h"
 #include "config.h"
+#include "csv.h"
+#include "constants.h"
 
 void *carregar_menu(void *args);
 void menu(setagem *params);

@@ -1,20 +1,16 @@
 #include "setagem.h"
-#include "config.h"
 
 int main() {
+    signal(SIGINT, fechar);
+    params = (setagem *) malloc(sizeof(setagem));
+    iniciar(params);
+    pthread_create(&sensores_th, NULL, ler_sensores, (void *) &params);
+    pthread_create(&th_servidor, NULL, iniciar_servidor, (void *) &params);
+    pthread_create(&atuadores_th, NULL, ativar_atuadores, (void *) &params);
 
-    signal(SIGINT, encerrar);
-
-    char aux[5000];
-    void *temp = &aux[0];
-    estado = (setagem * ) temp;
-    iniciar(estado);
-
-    pthread_create(&thread_servidor, NULL, iniciar_servidor_distribuido, NULL);
-    pthread_create(&thread_leitura_sensores, NULL, ler_sensores, (void *) &estado);
-    pthread_join(thread_servidor, NULL);
-    pthread_join(thread_leitura_sensores, NULL);
-
+    pthread_join(sensores_th, NULL);
+    pthread_join(th_servidor, NULL);
+    pthread_join(atuadores_th, NULL);
     return 0;
 }
 

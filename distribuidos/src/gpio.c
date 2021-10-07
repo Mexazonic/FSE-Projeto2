@@ -1,114 +1,53 @@
 #include "gpio.h"
 
-void iniciar_gpio() {
-    wiringPiSetup();
-}   
-
 int ler_gpio(int pin) {
     return digitalRead(pin);
 }
 
-void escrever_gpio(int pin, int signal) {
+void ligar_desligar_gpio(int pin, int signal) {
     digitalWrite(pin, signal);
 }
 
-void ligar_atuadores(setagem *params) {
+void iniciar_gpio() {
+    wiringPiSetup();
 
-    if(params->identificador == LS_T01) {
-        
-        escrever_gpio(LS_T01,  params->LS_T01_setagem);
-		printf("\nLS_T01: %d\n", params->LS_T01_setagem);
+    pinMode(LS_T01, OUTPUT);
 
-    } else if(params->identificador == LS_T02) {
-        
-        escrever_gpio(LS_T02, params->LS_T02_setagem);
-		printf("\nLS_T02: %d\n", params->LS_T02_setagem);
-
-    } else if(params->identificador == LC_T) {
+    pinMode(SJ_T02, INPUT);
     
-        escrever_gpio(LC_T, params->LC_T_setagem);
-		printf("\nLC_T: %d\n", params->LC_T_setagem);
+	pinMode(SF_T, INPUT);
     
-    } else if(params->identificador == AC_T) {
+	pinMode(SC_IN, INPUT);
     
-        escrever_gpio(AC_T, params->AC_T_setagem);
-		printf("\nAC_T: %d\n", params->AC_T_setagem);
+	pinMode(TEMP_HUM, INPUT);
     
-    } else if(params->identificador == ASP) {
+	pinMode(SP_T, INPUT);
     
-        escrever_gpio(ASP, params->ASP_setagem);
-		printf("\nASP: %d\n", params->ASP_setagem);
+	pinMode(SPo_T, INPUT);
     
-    }
-
-}
-
-void *ler_sensores(void *args) {
-
-	setagem *params = (setagem *) args;
-
-	while(1) {
-
-		read_dht_data(params);
-		printf("\nHumidade = %.1f%%\n", params->humidade);
-        printf("Temperatura = %.1f ºC\n", params->temperatura);
-		params->identificador = TEMP_HUM;
-		enviar_dado_tcp((void *) params);
-		
-		params->SP_T_setagem = ler_gpio(SP_T);
-		printf("\nSP_T: %d\n", params->SP_T_setagem);
-		params->identificador = SP_T;
-		enviar_dado_tcp((void *) params);
-
-		params->SPo_T_setagem = ler_gpio(SPo_T);
-		printf("\nSPo_T: %d\n", params->SPo_T_setagem);
-		params->identificador = SPo_T;
-		enviar_dado_tcp((void *) params);
-
-		params->SJ_T01_setagem = ler_gpio(SJ_T01);		
-		printf("\nSJ_T01: %d\n", params->SJ_T01_setagem);
-		params->identificador = SJ_T01;
-		enviar_dado_tcp((void *) params);
-
-		params->SJ_T02_setagem = ler_gpio(SJ_T02);		
-		printf("\nSJ_T02: %d\n", params->SJ_T02_setagem);
-		params->identificador = SJ_T02;
-		enviar_dado_tcp((void *) params);
-
-		params->SF_T_setagem = ler_gpio(SF_T);		
-		printf("\nSF_T: %d\n", params->SF_T_setagem);
-		params->identificador = SF_T;
-		enviar_dado_tcp((void *) params);
-
-		for(int contador = 0; contador < 5; contador++) {
-
-			params->SC_IN_setagem = ler_gpio(SC_IN);
-			params->SC_OUT_setagem = ler_gpio(SC_OUT);
-			params->pessoas = params->pessoas + params->SC_IN_setagem - params->SC_OUT_setagem;
-			params->pessoas = params->pessoas < 0 ? 0 : params->pessoas;
-
-			usleep(200000);
-		}
-
-		printf("\nPessoas: %d\n", params->pessoas);
-		params->identificador = PESSOAS_IDENTIFICADOR;
-		enviar_dado_tcp((void *) params);
-
-		sleep(1);
-	}
-
-	return 0;
-}
+	pinMode(SJ_T01, INPUT);
+	
+	pinMode(LS_T02, OUTPUT);
+    
+	pinMode(LC_T, OUTPUT);
+    
+	pinMode(AC_T, OUTPUT);
+    
+	pinMode(ASP, OUTPUT);
+    
+	pinMode(SC_OUT, INPUT);
+    
+}   
 
 int read_dht_data(setagem *params) {
     
-    uint8_t dht_pin = PIN_DHT11_1;  // default GPIO 20 (wiringPi 28)
+    uint8_t dht_pin = PIN_DHT11_1;
 
     int data[5] = { 0, 0, 0, 0, 0 };
     float temp_cels = -1;
     float temp_fahr = -1;
     float humidity  = -1;
-	uint8_t laststate = HIGH;
+	uint8_t lastsetagem = HIGH;
 	uint8_t counter	= 0;
 	uint8_t j = 0;
 	uint8_t i;
@@ -126,14 +65,14 @@ int read_dht_data(setagem *params) {
 	/* detect change and read data */
 	for ( i = 0; i < MAX_TIMINGS; i++ ) {
 		counter = 0;
-		while ( digitalRead( dht_pin ) == laststate ) {
+		while ( digitalRead( dht_pin ) == lastsetagem ) {
 			counter++;
 			delayMicroseconds( 1 );
 			if ( counter == 255 ) {
 				break;
 			}
 		}
-		laststate = digitalRead( dht_pin );
+		lastsetagem = digitalRead( dht_pin );
 
 		if ( counter == 255 )
 			break;
@@ -165,6 +104,7 @@ int read_dht_data(setagem *params) {
 			c = -c;
 		}
         
+        /* Update setagem */
         params->temperatura = c;
 		params->humidade = h;
         
@@ -179,4 +119,98 @@ int read_dht_data(setagem *params) {
 		temp_cels = temp_fahr = humidity = -1;
 		return 1; // NOK
 	}
+}
+
+void *ativar_atuadores(void *args) {
+
+	setagem *params = (setagem *) args;
+	pthread_mutex_t actuator_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+	while(1) {
+
+		pthread_mutex_lock(&actuator_mutex);
+
+		switch (params->codigo_atuador) {
+			case LS_T01:
+				ligar_desligar_gpio(LS_T01,  params->LS_T01_setagem);
+				break;
+			case LS_T02:
+				ligar_desligar_gpio(LS_T02, params->LS_T02_setagem);
+				break;
+			case LC_T:
+				ligar_desligar_gpio(LC_T, params->LC_T_setagem);
+				break;
+			case AC_T:
+				ligar_desligar_gpio(AC_T, params->AC_T_setagem);
+				break;
+			case ASP:
+				ligar_desligar_gpio(ASP, params->ASP_setagem);
+				break;
+			
+			default:
+				break;
+		}
+
+		params->codigo_atuador = -1;
+
+		pthread_mutex_unlock(&actuator_mutex);
+
+		sleep(2);
+	}
+}
+
+void *ler_sensores(void *args) {
+
+	setagem *params = (setagem *) args;
+	pthread_mutex_t sensor_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+	while(1) {
+
+		pthread_mutex_lock(&sensor_mutex);
+
+		params->SF_T_setagem = ler_gpio(SF_T);
+		printf("Fumaça do Terreo: %d\n", params->SF_T_setagem);
+		params->codigo_sensor = SF_T;
+		enviar_dados_tcp((void *) params);
+		
+		params->SP_T_setagem = ler_gpio(SP_T);
+		printf("Presenca Terreo: %d\n", params->SP_T_setagem);
+		params->codigo_sensor = SP_T;
+		enviar_dados_tcp((void *) params);
+
+		params->SJ_T01_setagem = ler_gpio(SJ_T01);
+		printf("\nJanela 01 Terreo: %d\n", params->SJ_T01_setagem);
+		params->codigo_sensor = SJ_T01;
+		enviar_dados_tcp((void *) params);
+
+		params->SPo_T_setagem = ler_gpio(SPo_T);
+		printf("Porta de entrada Terreo: %d\n", params->SPo_T_setagem);
+		params->codigo_sensor = SPo_T;
+		enviar_dados_tcp((void *) params);
+
+		params->SJ_T02_setagem = ler_gpio(SJ_T02);		
+		printf("Janela 02 Terreo: %d\n", params->SJ_T02_setagem);
+		params->codigo_sensor = SJ_T02;
+		enviar_dados_tcp((void *) params);
+
+		read_dht_data(params);
+		printf("\nHumidade = %.1f Temperatura = %.1f\n", params->humidade, params->temperatura);
+		params->codigo_sensor = TEMP_HUM;
+		enviar_dados_tcp((void *) params);
+
+		params->SC_IN_setagem = ler_gpio(SC_IN);
+		params->SC_OUT_setagem = ler_gpio(SC_OUT);
+		params->pessoas = params->pessoas + params->SC_IN_setagem - params->SC_OUT_setagem;
+		params->pessoas = params->pessoas < 0 ? 0 : params->pessoas;
+
+		params->codigo_sensor = PEOPLE_COUNT;
+
+		enviar_dados_tcp((void *) params);
+
+		pthread_mutex_unlock(&sensor_mutex);
+
+		sleep(2);
+	}
+
+	return 0;
 }

@@ -1,7 +1,11 @@
-#ifndef _CONFIG_H
-#define _CONFIG_H
+#ifndef CONFIG_H_
+#define CONFIG_H_
+
+#include <stdio.h>
+#include "constants.h"
 
 typedef struct {
+
     float temperatura;
     float humidade;
     int pessoas;
@@ -19,7 +23,8 @@ typedef struct {
     int SJ_T01_setagem;
     int SJ_T02_setagem;
     int SPo_T_setagem;
-    int identificador;
+    int codigo_sensor;
+    int codigo_atuador;
 
 } setagem;
 
