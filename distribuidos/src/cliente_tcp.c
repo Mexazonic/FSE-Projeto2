@@ -16,7 +16,7 @@ int enviar_dado_tcp(const void *message) {
 
 	size = sizeof(setagem);
 	bytes_sent = send(client_socket, message, size, 0);
-	printf("Erro no recv. %d \n", bytes_sent);
+	//printf("Erro no recv. %d \n", bytes_sent);
 
 	if(bytes_sent != size) {
 		
