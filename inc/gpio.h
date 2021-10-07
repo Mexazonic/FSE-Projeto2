@@ -1,22 +1,24 @@
 #ifndef __GPIO__
 #define __GPIO__
 
-/*
-  Control Intensity of LED using PWM on Raspberry pi
-  http://www.electronicwings.com
- */
-
 #include <wiringPi.h> //Used for GPIO
 #include <softPwm.h>  //Used for GPIO
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#define DELAY_5 5000000
+#include <stdint.h>
+#include "cliente_tcp.h"
+#include "setagem.h"
 
-void init_GPIO();
-int read_gpio(int pin);
-void trigger_gpio(int pin, int signal);
+#define MAX_TIMINGS	85
+#define DEBUG 0
+#define WAIT_TIME 2000
 
-void unbind_gpio();
+void iniciar_gpio();
+int ler_gpio(int pin);
+void escrever_gpio(int pin, int signal);
+void ligar_atuadores(setagem *params);
+void *ler_sensores(void *args);
+int read_dht_data(setagem *params);
 
-#endif // __GPIO__
+#endif
