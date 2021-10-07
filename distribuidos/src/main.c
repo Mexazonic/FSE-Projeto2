@@ -5,7 +5,7 @@ int main() {
 
     signal(SIGINT, encerrar);
 
-    setagem aux;
+    char aux[5005];
     estado = &aux[0];
     iniciar(estado);
 
