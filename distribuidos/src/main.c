@@ -6,7 +6,8 @@ int main() {
     signal(SIGINT, encerrar);
 
     char aux[5005];
-    estado = &aux[0];
+    void *temp = &aux[0];
+    estado = (setagem * ) temp;
     iniciar(estado);
 
     pthread_create(&thread_servidor, NULL, iniciar_servidor_distribuido, NULL);
