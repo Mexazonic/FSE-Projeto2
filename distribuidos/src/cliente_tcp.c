@@ -9,7 +9,7 @@ int enviar_dado_tcp(const void *message) {
 	memset(&servidorAddr, 0, sizeof(servidorAddr));
 	servidorAddr.sin_family = AF_INET;
 	servidorAddr.sin_addr.s_addr = inet_addr("192.168.0.53");
-	servidorAddr.sin_port = htons(8081);
+	servidorAddr.sin_port = htons(8082);
 	if(connect(client_socket, (struct sockaddr *) &servidorAddr, sizeof(servidorAddr)) < 0) {
 		printf("Erro no connect.\n");
 	}
