@@ -5,7 +5,7 @@ int main() {
 
     signal(SIGINT, encerrar);
 
-    char aux[5005];
+    char aux[5000];
     void *temp = &aux[0];
     estado = (setagem * ) temp;
     iniciar(estado);

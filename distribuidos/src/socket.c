@@ -20,7 +20,7 @@ void *iniciar_servidor_distribuido() {
 	}
 
 	int bytes_received;
-	char buffer[5005];
+	char buffer[5000];
 	void *buffer_tmp = &buffer[0];
 
 	while(1){    
