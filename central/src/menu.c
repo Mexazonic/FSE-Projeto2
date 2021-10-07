@@ -1,4 +1,6 @@
 #include "menu.h"
+#include "setagem.h"
+
 
 void *carregar_menu(void *args) {
 
@@ -19,14 +21,14 @@ void menu(setagem *params) {
     printf("5-Alarme de incêndio\n");
     printf("\nOpção: ");
     
-    int option;
-
+    int option, run = 0;
+    int turn_on_off;
     scanf("%d", &option);
     
     switch(option) {
         case 1:
              
-            int run = 0;
+            run = 0;
 
             while(1) {
 
@@ -70,8 +72,7 @@ void menu(setagem *params) {
                 printf("4-Sair\n");
                 printf("\nOpção: ");
                 
-                int option;
-                int turn_on_off;
+               
 
                 scanf("%d", &option);
 
@@ -142,8 +143,6 @@ void menu(setagem *params) {
             printf("2-Sair\n");
             printf("\nOpção: ");
             
-            int option;
-            int turn_on_off;
 
             scanf("%d", &option);
 
@@ -179,7 +178,6 @@ void menu(setagem *params) {
             printf("\n********** Alarme de Presença ********\n\n");
             ligar_desligar();
 
-            int turn_on_off;
 
             scanf("%d", &turn_on_off);
             
@@ -198,7 +196,6 @@ void menu(setagem *params) {
             printf("\n********** Alarme de Incendio ********\n\n");
             ligar_desligar();
 
-            int turn_on_off;
 
             scanf("%d", &turn_on_off);
             
