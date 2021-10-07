@@ -8,6 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "setagem.h"
+#include "config.h"
 
 int client_socket;
 struct sockaddr_in servidorAddr;

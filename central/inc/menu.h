@@ -7,6 +7,7 @@
 #include "setagem.h"
 #include "cliente_tcp.h"
 #include "csv.h"
+#include "config.h"
 
 void *carregar_menu(void *args);
 void menu(setagem *params);
