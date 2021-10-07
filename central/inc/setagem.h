@@ -7,7 +7,6 @@
 #include <pthread.h>
 #include "socket.h"
 #include "cliente_tcp.h"
-#include "gpio.h"
 #include "menu.h"
 #include "csv.h"
 #include "config.h"
