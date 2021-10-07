@@ -19,7 +19,7 @@ void *iniciar_servidor_distribuido(void *atual_estado) {
 	}
 
 	int bytes_received;
-	char buffer[5000];
+	char buffer[5005];
 	void *buffer_tmp = &buffer[0];
 
 	while(1){ 
@@ -27,7 +27,7 @@ void *iniciar_servidor_distribuido(void *atual_estado) {
 		client_socket = accept(server_socket, (struct sockaddr*)NULL ,NULL);
 
 		if ((bytes_received = recv(client_socket, buffer_tmp, sizeof(setagem), 0)) < 0) {
-			printf("Erro no recv.\n");
+			printf("Erro no recv.%d \n", bytes_received);
 		}
 
 		setagem *params = (setagem *) buffer_tmp;
