@@ -4,8 +4,10 @@
 int main() {
 
     signal(SIGINT, fechar);
-    setagem aux;
-    estado = &aux[0];
+    char aux[5005];
+    void * temp = &aux[0];
+
+    estado = (setagem *) temp;
     iniciar(estado);
 
     pthread_create(&thread_servidor, NULL, iniciar_servidor_distribuido, (void *) &estado);
